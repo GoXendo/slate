@@ -18,6 +18,13 @@ search: true
 
 # Introduction
 
+> API Endpoint
+
+```shell
+https://xen.do/api/v1/ 
+```
+
+
 Xendo's a hosted Enterprise Search service that provides unified search across 30+ cloud apps like Google Apps, Salesforce, Box, Dropbox, Asana, Microsoft Exchange and more (see the full list here https://xen.do/integrations).
 
 The Xendo API enables you to build full-text search into your applications and workflows so you can provide contextual information to your users such a list of apps that contain the search term they're looking for or providing auto-complete as they're typing a name.
@@ -69,8 +76,9 @@ redirect_uri | None | <Your Redirect URI>
 
 ## Step 3 - Refreshing an Access Token
 
+> The Authorization Bearer header must be passed with every API request.  For example:
+
 ```shell
-# The Authorization Bearer header must be passed with every API request.  For example:
 curl -X GET "https://xen.do/api/v1/search/" 
     -H "Authorization: Bearer 17126fbae658371b7c0eeda04b2cfb3b57f4cb60" 
 ```
@@ -291,7 +299,7 @@ curl -H "Authorization: Bearer 17126fbae733871b7c0eeda04b2cfb3b57f4cb60" -X GET 
 }
 ```
 
-This endpoint enables search across all connected service accounts.
+This endpoint provides lists of sources and content types that contain the partial search term.  The list of facets can be applied to help users navigate and refine their search query, providing 'autosuggest' or 'autocomplete' capabilities.
 
 ### HTTP Request
 
@@ -405,115 +413,3 @@ sources | None | Comma-separated list of source services eg. salesforce,box,gmai
 <aside class="success">
 Remember — a happy kitten is an authenticated kitten!
 </aside>
-
-
-
-
-# Kittens
-
-## Get All Kittens
-
-```ruby
-require 'kittn'
-
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-api.kittens.get
-```
-
-```python
-import kittn
-
-api = kittn.authorize('meowmeowmeow')
-api.kittens.get()
-```
-
-```shell
-curl "http://example.com/api/kittens"
-  -H "Authorization: meowmeowmeow"
-```
-
-> The above command returns JSON structured like this:
-
-```json
-[
-  {
-    "id": 1,
-    "name": "Fluffums",
-    "breed": "calico",
-    "fluffiness": 6,
-    "cuteness": 7
-  },
-  {
-    "id": 2,
-    "name": "Max",
-    "breed": "unknown",
-    "fluffiness": 5,
-    "cuteness": 10
-  }
-]
-```
-
-This endpoint retrieves all kittens.
-
-### HTTP Request
-
-`GET http://example.com/api/kittens`
-
-### Query Parameters
-
-Parameter | Default | Description
---------- | ------- | -----------
-include_cats | false | If set to true, the result will also include cats.
-available | true | If set to false, the result will include kittens that have already been adopted.
-
-<aside class="success">
-Remember — a happy kitten is an authenticated kitten!
-</aside>
-
-## Get a Specific Kitten
-
-```ruby
-require 'kittn'
-
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-api.kittens.get(2)
-```
-
-```python
-import kittn
-
-api = kittn.authorize('meowmeowmeow')
-api.kittens.get(2)
-```
-
-```shell
-curl "http://example.com/api/kittens/2"
-  -H "Authorization: meowmeowmeow"
-```
-
-> The above command returns JSON structured like this:
-
-```json
-{
-  "id": 2,
-  "name": "Max",
-  "breed": "unknown",
-  "fluffiness": 5,
-  "cuteness": 10
-}
-```
-
-This endpoint retrieves a specific kitten.
-
-<aside class="warning">If you're not using an administrator API key, note that some kittens will return 403 Forbidden if they are hidden for admins only.</aside>
-
-### HTTP Request
-
-`GET http://example.com/kittens/<ID>`
-
-### URL Parameters
-
-Parameter | Description
---------- | -----------
-ID | The ID of the kitten to retrieve
-
