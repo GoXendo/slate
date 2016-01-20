@@ -1,10 +1,10 @@
 ---
-title: API Reference
+title: Xendo API Reference
 
 language_tabs:
   - shell
-  - ruby
   - python
+  - ruby
 
 toc_footers:
   - <a href='http://info.xen.do/developers/api'>Sign Up for a Developer Key</a>
@@ -313,6 +313,152 @@ q | None | Search query.
 sources | None | Comma-separated list of sources.  Supported types include `salesforce`, `gmail`, `box`, `dropbox`.
 content_types | None | Comma-separated list of content types.  Supported types include `document`, `spreadsheet`, `contact`.
 
+
+
+# Services
+
+## List User Services
+
+> Retrieve a list of services for an authenticated user.  Service descriptions include display names and current indexing state:
+
+```shell
+curl -X GET "https://xen.do/api/v1/user-service/"
+    -H "Authorization: Bearer 17126fbae733871b7c0eeda04b2cfb3b57f4cb60" 
+```
+
+> The above command returns JSON structured like this:
+
+```json
+{
+  "meta": {
+    "limit": 75,
+    "next": null,
+    "offset": 0,
+    "previous": null,
+    "total_count": 9
+  },
+  "objects": [
+    {
+      "created": "Mon, 18 May 2015 15:01:34 -0500",
+      "display_name": "julian",
+      "exclude": null,
+      "icon_url": "/static/images/services/icons/slack.png",
+      "id": 259,
+      "initial_indexing_progress": null,
+      "items_total": 0,
+      "last_indexed": null,
+      "logo_url": "/static/images/services/slack.png",
+      "next_indexing": "Mon, 18 May 2015 15:01:34 -0500",
+      "notify_on_completion": false,
+      "ordering": 7,
+      "pretty_name": "Slack",
+      "private_service": false,
+      "resource_uri": "/api/v1/user-service/259/",
+      "service_name": "slack",
+      "source_connection_status": null,
+      "status": "indexing",
+      "token_expiration_date": null
+    },
+    {
+      "created": "Fri, 1 May 2015 18:29:38 -0500",
+      "display_name": "Julian Gay",
+      "exclude": null,
+      "icon_url": "/static/images/services/box.png",
+      "id": 249,
+      "initial_indexing_progress": null,
+      "items_total": 40,
+      "last_indexed": "Tue, 13 Oct 2015 20:47:12 -0500",
+      "logo_url": "/static/images/services/box.png",
+      "next_indexing": "Tue, 13 Oct 2015 21:07:12 -0500",
+      "notify_on_completion": false,
+      "ordering": 3,
+      "pretty_name": "Box",
+      "private_service": false,
+      "resource_uri": "/api/v1/user-service/249/",
+      "service_name": "box",
+      "source_connection_status": "('Connection aborted.', 'nodename not provided, or not known')",
+      "status": "indexing",
+      "token_expiration_date": null
+    },
+    {
+      "created": "Sat, 10 Oct 2015 23:22:04 -0500",
+      "display_name": "@juliangay",
+      "exclude": null,
+      "icon_url": "/static/images/services/icons/twitter.png",
+      "id": 274,
+      "initial_indexing_progress": null,
+      "items_total": 21201,
+      "last_indexed": "Fri, 23 Oct 2015 05:02:00 -0500",
+      "logo_url": "/static/images/services/twitter.png",
+      "next_indexing": "Fri, 23 Oct 2015 05:22:00 -0500",
+      "notify_on_completion": false,
+      "ordering": 1,
+      "pretty_name": "Twitter",
+      "private_service": false,
+      "resource_uri": "/api/v1/user-service/274/",
+      "service_name": "twitter",
+      "source_connection_status": null,
+      "status": "indexing",
+      "token_expiration_date": null
+    },
+   ]
+}
+```
+
+This endpoint enables an authenticated user to list, create, update and delete their connected services.
+
+### HTTP Request
+
+`GET https://xen.do/api/v1/user-service/`
+
+
+
+## Get a specific Service connection
+
+> Retrieve a specific service connection for an authenticated user.  Service descriptions include display names and current indexing state:
+
+```shell
+curl -X GET "https://xen.do/api/v1/user-service/274/"
+    -H "Authorization: Bearer 17126fbae733871b7c0eeda04b2cfb3b57f4cb60" 
+```
+
+> The above command returns JSON structured like this:
+
+```json
+{
+  "id": 274, 
+  "service_name": "twitter", 
+  "pretty_name": "Twitter", 
+  "display_name": "@juliangay", 
+  "icon_url": "/static/images/services/icons/twitter.png", 
+  "created": "Sat, 10 Oct 2015 23:22:04 -0500", 
+  "last_indexed": "Fri, 23 Oct 2015 05:02:00 -0500", 
+  "items_total": 21201, 
+  "exclude": null, 
+  "initial_indexing_progress": null, 
+  "logo_url": "/static/images/services/twitter.png", 
+  "notify_on_completion": false, 
+  "ordering": 1, 
+  "private_service": false, 
+  "resource_uri": "/api/v1/user-service/274/", 
+  "source_connection_status": null, 
+  "status": "indexing", 
+  "next_indexing": "Fri, 23 Oct 2015 05:22:00 -0500", 
+  "token_expiration_date": null
+}
+```
+
+This endpoint enables an authenticated user to read, create, update and delete a connected service.
+
+### HTTP Request
+
+`GET https://xen.do/api/v1/user-service/<ID>/`
+
+### Query Parameters
+
+Parameter | Default | Description
+--------- | ------- | -----------
+ID | None | The unique service ID of the user's connected account.
 
 
 # Provisioning
