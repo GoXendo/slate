@@ -46,7 +46,7 @@
     <div class="page-wrapper">
       <div class="dark-box"></div>
       <div class="content">
-        <h1 id="introduction">Introduction</h1>
+        <h1 id="xendo-api-introduction">Xendo API Introduction</h1>
 
 <blockquote>
 <p>API Endpoint</p>
@@ -478,6 +478,114 @@ The response will include a new access token and refresh token.
 </tr>
 </tbody></table>
 
+<h1 id="views">Views</h1>
+
+<h2 id="list-user-views">List User Views</h2>
+
+<blockquote>
+<p>Return a list of the authenticated user&rsquo;s views:</p>
+</blockquote>
+<pre class="highlight shell"><code>curl -X GET <span class="s2">"https://xen.do/api/v1/user-view/"</span>
+    -H <span class="s2">"Authorization: Bearer 17126fbae733871b7c0eeda04b2cfb3b57f4cb60"</span> 
+</code></pre>
+
+<blockquote>
+<p>The above command returns JSON structured like this:</p>
+</blockquote>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+  </span><span class="nt">"meta"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nt">"limit"</span><span class="p">:</span><span class="w"> </span><span class="mi">75</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"next"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"offset"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"previous"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"total_count"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="nt">"objects"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="nt">"created"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Tue, 26 May 2015 22:58:20 -0500"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Most recent updates from across your accounts"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"facets"</span><span class="p">:</span><span class="w"> </span><span class="s2">"[]"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">448</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"modified"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Tue, 22 Dec 2015 23:58:36 -0600"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"ordering"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"query"</span><span class="p">:</span><span class="w"> </span><span class="s2">"recent:content"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"resource_uri"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/api/v1/user-view/448/"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"short_label"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Recent updates"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"sort_fields"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"user"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/api/v1/user/22/"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="nt">"created"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Wed, 25 Nov 2015 15:33:48 -0600"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Results for 'Project X'"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"facets"</span><span class="p">:</span><span class="w"> </span><span class="s2">"[]"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">516</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"modified"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Wed, 23 Dec 2015 13:33:02 -0600"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"ordering"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"query"</span><span class="p">:</span><span class="w"> </span><span class="s2">"project x"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"resource_uri"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/api/v1/user-view/516/"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"short_label"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Project X tracking"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"sort_fields"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"user"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/api/v1/user/22/"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+  </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<p>This endpoint enables an authenticated user to set and retrieve their saved views.  &#39;Views&rsquo; provide an intuitive way for users to encapsulate complex search queries with a memorable and meaningful label.  Using &#39;views&rsquo;, a user may search their content with one click rather than having to compose a search query.  &#39;Views&rsquo; are the foundation for alerts which may be configured to notify users about new content that matches a &#39;view&rsquo;.</p>
+
+<h3 id="http-request">HTTP Request</h3>
+
+<p><code class="prettyprint">GET https://xen.do/api/v1/user-view/</code></p>
+
+<h2 id="get-a-specific-view">Get a specific View</h2>
+
+<blockquote>
+<p>Return a specific view:</p>
+</blockquote>
+<pre class="highlight shell"><code>curl -X GET <span class="s2">"https://xen.do/api/v1/user-view/448/"</span>
+    -H <span class="s2">"Authorization: Bearer 17126fbae733871b7c0eeda04b2cfb3b57f4cb60"</span> 
+</code></pre>
+
+<blockquote>
+<p>The above command returns JSON structured like this:</p>
+</blockquote>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+  </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">448</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"created"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Tue, 26 May 2015 22:58:20 -0500"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Most recent updates from across your accounts"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"facets"</span><span class="p">:</span><span class="w"> </span><span class="s2">"[]"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"modified"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Tue, 22 Dec 2015 23:58:36 -0600"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"ordering"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"query"</span><span class="p">:</span><span class="w"> </span><span class="s2">"recent:content"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"resource_uri"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/api/v1/user-view/448/"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"short_label"</span><span class="p">:</span><span class="w"> </span><span class="s2">"hello"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"sort_fields"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"user"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/api/v1/user/22/"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<p>This endpoint enables an authenticated user to create, read, update and delete a &#39;view&rsquo;.</p>
+
+<h3 id="http-request">HTTP Request</h3>
+
+<p><code class="prettyprint">GET https://xen.do/api/v1/user-view/&lt;ID&gt;/</code></p>
+
+<h3 id="query-parameters">Query Parameters</h3>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>ID</td>
+<td>None</td>
+<td>ID of the view.</td>
+</tr>
+</tbody></table>
+
 <h1 id="services">Services</h1>
 
 <h2 id="list-user-services">List User Services</h2>
@@ -574,10 +682,10 @@ The response will include a new access token and refresh token.
 
 <p><code class="prettyprint">GET https://xen.do/api/v1/user-service/</code></p>
 
-<h2 id="get-a-specific-service-connection">Get a specific Service connection</h2>
+<h2 id="get-a-specific-service-description">Get a specific Service description</h2>
 
 <blockquote>
-<p>Retrieve a specific service connection for an authenticated user.  Service descriptions include display names and current indexing state:</p>
+<p>Retrieve a specific service description and status for an authenticated user.  Service descriptions include display names and current indexing state:</p>
 </blockquote>
 <pre class="highlight shell"><code>curl -X GET <span class="s2">"https://xen.do/api/v1/user-service/274/"</span>
     -H <span class="s2">"Authorization: Bearer 17126fbae733871b7c0eeda04b2cfb3b57f4cb60"</span> 
