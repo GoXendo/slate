@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <title>API Reference</title>
+    <title>Xendo API Reference</title>
 
     <link href="stylesheets/screen.css" rel="stylesheet" type="text/css" media="screen" />
     <link href="stylesheets/print.css" rel="stylesheet" type="text/css" media="print" />
@@ -13,7 +13,7 @@
 
       <script>
         $(function() {
-          setupLanguages(["shell","ruby","python"]);
+          setupLanguages(["shell","python","ruby"]);
         });
       </script>
   </head>
@@ -29,8 +29,8 @@
       <img src="images/logo.png" />
         <div class="lang-selector">
               <a href="#" data-language-name="shell">shell</a>
-              <a href="#" data-language-name="ruby">ruby</a>
               <a href="#" data-language-name="python">python</a>
+              <a href="#" data-language-name="ruby">ruby</a>
         </div>
         <div class="search">
           <input type="text" class="search" id="input-search" placeholder="Search">
@@ -478,6 +478,159 @@ The response will include a new access token and refresh token.
 </tr>
 </tbody></table>
 
+<h1 id="services">Services</h1>
+
+<h2 id="list-user-services">List User Services</h2>
+
+<blockquote>
+<p>Retrieve a list of services for an authenticated user.  Service descriptions include display names and current indexing state:</p>
+</blockquote>
+<pre class="highlight shell"><code>curl -X GET <span class="s2">"https://xen.do/api/v1/user-service/"</span>
+    -H <span class="s2">"Authorization: Bearer 17126fbae733871b7c0eeda04b2cfb3b57f4cb60"</span> 
+</code></pre>
+
+<blockquote>
+<p>The above command returns JSON structured like this:</p>
+</blockquote>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+  </span><span class="nt">"meta"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nt">"limit"</span><span class="p">:</span><span class="w"> </span><span class="mi">75</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"next"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"offset"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"previous"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"total_count"</span><span class="p">:</span><span class="w"> </span><span class="mi">9</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="nt">"objects"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="nt">"created"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Mon, 18 May 2015 15:01:34 -0500"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"display_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"julian"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"exclude"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"icon_url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/static/images/services/icons/slack.png"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">259</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"initial_indexing_progress"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"items_total"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"last_indexed"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"logo_url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/static/images/services/slack.png"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"next_indexing"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Mon, 18 May 2015 15:01:34 -0500"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"notify_on_completion"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"ordering"</span><span class="p">:</span><span class="w"> </span><span class="mi">7</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"pretty_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Slack"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"private_service"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"resource_uri"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/api/v1/user-service/259/"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"service_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"slack"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"source_connection_status"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"indexing"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"token_expiration_date"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="nt">"created"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Fri, 1 May 2015 18:29:38 -0500"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"display_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Julian Gay"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"exclude"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"icon_url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/static/images/services/box.png"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">249</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"initial_indexing_progress"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"items_total"</span><span class="p">:</span><span class="w"> </span><span class="mi">40</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"last_indexed"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Tue, 13 Oct 2015 20:47:12 -0500"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"logo_url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/static/images/services/box.png"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"next_indexing"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Tue, 13 Oct 2015 21:07:12 -0500"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"notify_on_completion"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"ordering"</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"pretty_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Box"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"private_service"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"resource_uri"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/api/v1/user-service/249/"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"service_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"box"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"source_connection_status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"('Connection aborted.', 'nodename not provided, or not known')"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"indexing"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"token_expiration_date"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="nt">"created"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Sat, 10 Oct 2015 23:22:04 -0500"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"display_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"@juliangay"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"exclude"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"icon_url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/static/images/services/icons/twitter.png"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">274</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"initial_indexing_progress"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"items_total"</span><span class="p">:</span><span class="w"> </span><span class="mi">21201</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"last_indexed"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Fri, 23 Oct 2015 05:02:00 -0500"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"logo_url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/static/images/services/twitter.png"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"next_indexing"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Fri, 23 Oct 2015 05:22:00 -0500"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"notify_on_completion"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"ordering"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"pretty_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Twitter"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"private_service"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"resource_uri"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/api/v1/user-service/274/"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"service_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"twitter"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"source_connection_status"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"indexing"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"token_expiration_date"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+   </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<p>This endpoint enables an authenticated user to list, create, update and delete their connected services.</p>
+
+<h3 id="http-request">HTTP Request</h3>
+
+<p><code class="prettyprint">GET https://xen.do/api/v1/user-service/</code></p>
+
+<h2 id="get-a-specific-service-connection">Get a specific Service connection</h2>
+
+<blockquote>
+<p>Retrieve a specific service connection for an authenticated user.  Service descriptions include display names and current indexing state:</p>
+</blockquote>
+<pre class="highlight shell"><code>curl -X GET <span class="s2">"https://xen.do/api/v1/user-service/274/"</span>
+    -H <span class="s2">"Authorization: Bearer 17126fbae733871b7c0eeda04b2cfb3b57f4cb60"</span> 
+</code></pre>
+
+<blockquote>
+<p>The above command returns JSON structured like this:</p>
+</blockquote>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+  </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">274</span><span class="p">,</span><span class="w"> 
+  </span><span class="nt">"service_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"twitter"</span><span class="p">,</span><span class="w"> 
+  </span><span class="nt">"pretty_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Twitter"</span><span class="p">,</span><span class="w"> 
+  </span><span class="nt">"display_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"@juliangay"</span><span class="p">,</span><span class="w"> 
+  </span><span class="nt">"icon_url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/static/images/services/icons/twitter.png"</span><span class="p">,</span><span class="w"> 
+  </span><span class="nt">"created"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Sat, 10 Oct 2015 23:22:04 -0500"</span><span class="p">,</span><span class="w"> 
+  </span><span class="nt">"last_indexed"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Fri, 23 Oct 2015 05:02:00 -0500"</span><span class="p">,</span><span class="w"> 
+  </span><span class="nt">"items_total"</span><span class="p">:</span><span class="w"> </span><span class="mi">21201</span><span class="p">,</span><span class="w"> 
+  </span><span class="nt">"exclude"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w"> 
+  </span><span class="nt">"initial_indexing_progress"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w"> 
+  </span><span class="nt">"logo_url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/static/images/services/twitter.png"</span><span class="p">,</span><span class="w"> 
+  </span><span class="nt">"notify_on_completion"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w"> 
+  </span><span class="nt">"ordering"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> 
+  </span><span class="nt">"private_service"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w"> 
+  </span><span class="nt">"resource_uri"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/api/v1/user-service/274/"</span><span class="p">,</span><span class="w"> 
+  </span><span class="nt">"source_connection_status"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w"> 
+  </span><span class="nt">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"indexing"</span><span class="p">,</span><span class="w"> 
+  </span><span class="nt">"next_indexing"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Fri, 23 Oct 2015 05:22:00 -0500"</span><span class="p">,</span><span class="w"> 
+  </span><span class="nt">"token_expiration_date"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<p>This endpoint enables an authenticated user to read, create, update and delete a connected service.</p>
+
+<h3 id="http-request">HTTP Request</h3>
+
+<p><code class="prettyprint">GET https://xen.do/api/v1/user-service/&lt;ID&gt;/</code></p>
+
+<h3 id="query-parameters">Query Parameters</h3>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>ID</td>
+<td>None</td>
+<td>The unique service ID of the user&rsquo;s connected account.</td>
+</tr>
+</tbody></table>
+
 <h1 id="provisioning">Provisioning</h1>
 
 <h2 id="users">Users</h2>
@@ -647,8 +800,8 @@ Remember — a happy kitten is an authenticated kitten!
       <div class="dark-box">
           <div class="lang-selector">
                 <a href="#" data-language-name="shell">shell</a>
-                <a href="#" data-language-name="ruby">ruby</a>
                 <a href="#" data-language-name="python">python</a>
+                <a href="#" data-language-name="ruby">ruby</a>
           </div>
       </div>
     </div>
