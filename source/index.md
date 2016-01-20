@@ -16,7 +16,7 @@ includes:
 search: true
 ---
 
-# Introduction
+# Xendo API Introduction
 
 > API Endpoint
 
@@ -315,6 +315,107 @@ content_types | None | Comma-separated list of content types.  Supported types i
 
 
 
+# Views
+
+## List User Views
+
+> Return a list of the authenticated user's views:
+
+```shell
+curl -X GET "https://xen.do/api/v1/user-view/"
+    -H "Authorization: Bearer 17126fbae733871b7c0eeda04b2cfb3b57f4cb60" 
+```
+
+> The above command returns JSON structured like this:
+
+```json
+{
+  "meta": {
+    "limit": 75,
+    "next": null,
+    "offset": 0,
+    "previous": null,
+    "total_count": 2
+  },
+  "objects": [
+    {
+      "created": "Tue, 26 May 2015 22:58:20 -0500",
+      "description": "Most recent updates from across your accounts",
+      "facets": "[]",
+      "id": 448,
+      "modified": "Tue, 22 Dec 2015 23:58:36 -0600",
+      "ordering": 0,
+      "query": "recent:content",
+      "resource_uri": "/api/v1/user-view/448/",
+      "short_label": "Recent updates",
+      "sort_fields": "",
+      "user": "/api/v1/user/22/"
+    },
+    {
+      "created": "Wed, 25 Nov 2015 15:33:48 -0600",
+      "description": "Results for 'Project X'",
+      "facets": "[]",
+      "id": 516,
+      "modified": "Wed, 23 Dec 2015 13:33:02 -0600",
+      "ordering": 1,
+      "query": "project x",
+      "resource_uri": "/api/v1/user-view/516/",
+      "short_label": "Project X tracking",
+      "sort_fields": "",
+      "user": "/api/v1/user/22/"
+    },
+  ]
+}
+```
+
+This endpoint enables an authenticated user to set and retrieve their saved views.  'Views' provide an intuitive way for users to encapsulate complex search queries with a memorable and meaningful label.  Using 'views', a user may search their content with one click rather than having to compose a search query.  'Views' are the foundation for alerts which may be configured to notify users about new content that matches a 'view'.
+
+### HTTP Request
+
+`GET https://xen.do/api/v1/user-view/`
+
+
+
+## Get a specific View
+
+> Return a specific view:
+
+```shell
+curl -X GET "https://xen.do/api/v1/user-view/448/"
+    -H "Authorization: Bearer 17126fbae733871b7c0eeda04b2cfb3b57f4cb60" 
+```
+
+> The above command returns JSON structured like this:
+
+```json
+{
+  "id": 448,
+  "created": "Tue, 26 May 2015 22:58:20 -0500",
+  "description": "Most recent updates from across your accounts",
+  "facets": "[]",
+  "modified": "Tue, 22 Dec 2015 23:58:36 -0600",
+  "ordering": 0,
+  "query": "recent:content",
+  "resource_uri": "/api/v1/user-view/448/",
+  "short_label": "hello",
+  "sort_fields": "",
+  "user": "/api/v1/user/22/"
+}
+```
+
+This endpoint enables an authenticated user to create, read, update and delete a 'view'.
+
+### HTTP Request
+
+`GET https://xen.do/api/v1/user-view/<ID>/`
+
+### Query Parameters
+
+Parameter | Default | Description
+--------- | ------- | -----------
+ID | None | ID of the view.
+
+
 # Services
 
 ## List User Services
@@ -413,9 +514,9 @@ This endpoint enables an authenticated user to list, create, update and delete t
 
 
 
-## Get a specific Service connection
+## Get a specific Service description
 
-> Retrieve a specific service connection for an authenticated user.  Service descriptions include display names and current indexing state:
+> Retrieve a specific service description and status for an authenticated user.  Service descriptions include display names and current indexing state:
 
 ```shell
 curl -X GET "https://xen.do/api/v1/user-service/274/"
