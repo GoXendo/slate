@@ -192,6 +192,8 @@ q | None | Search query.
 sources | None | Comma-separated list of sources.  Supported types include `salesforce`, `gmail`, `box`, `dropbox`.
 content_types | None | Comma-separated list of content types.  Supported types include `document`, `spreadsheet`, `contact`.
 dates | None | Restrict the results to items within the specified date range expressed as `dates=<date_from>,<date_to>`.  Dates should be formatted `YYYY-MM-DDThh:mm:ssZ`.  Searching between a date range would look this `/api/v1/search/?q=*&dates=2015-10-20T23:00:00Z,2015-11-11T23:00:00Z`. Alternatively, the 'dates' parameter can accept a descriptive value: `NOW`, `MINUTES`, `HOURS`, `DAYS`, `MONTHS`, `YEARS` which can be used `/api/v1/search/?q=*&dates=n<date unit>`.  As an example, searching for content updates within the past 3 hours would be `/api/v1/search/?q=*&dates=3HOURS`. 
+tags | None | Comma-separated list of tags which will be used to filter search results.
+account | None | Restrict a search to a specific account.  Typically used when a user has multiple accounts in the same service, for example, multiple Gmail accounts or multiple Slack teams.
 sort | By relevance | Override the default sort order.  Valid sort orders include: `date`, `author`, `name`, `title`.`subject`.  Ascending `:asc` or Descending `:desc` must be specified, for example: `sort=date:asc`.
 page_size | 20 | Number of results to return per page.
 p | 0 | Page of results.
