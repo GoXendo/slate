@@ -309,6 +309,16 @@ The response will include a new access token and refresh token.
 <td>Restrict the results to items within the specified date range expressed as <code class="prettyprint">dates=&lt;date_from&gt;,&lt;date_to&gt;</code>.  Dates should be formatted <code class="prettyprint">YYYY-MM-DDThh:mm:ssZ</code>.  Searching between a date range would look this <code class="prettyprint">/api/v1/search/?q=*&amp;dates=2015-10-20T23:00:00Z,2015-11-11T23:00:00Z</code>. Alternatively, the &#39;dates&rsquo; parameter can accept a descriptive value: <code class="prettyprint">NOW</code>, <code class="prettyprint">MINUTES</code>, <code class="prettyprint">HOURS</code>, <code class="prettyprint">DAYS</code>, <code class="prettyprint">MONTHS</code>, <code class="prettyprint">YEARS</code> which can be used <code class="prettyprint">/api/v1/search/?q=*&amp;dates=n&lt;date unit&gt;</code>.  As an example, searching for content updates within the past 3 hours would be <code class="prettyprint">/api/v1/search/?q=*&amp;dates=3HOURS</code>.</td>
 </tr>
 <tr>
+<td>tags</td>
+<td>None</td>
+<td>Comma-separated list of tags which will be used to filter search results.</td>
+</tr>
+<tr>
+<td>account</td>
+<td>None</td>
+<td>Restrict a search to a specific account.  Typically used when a user has multiple accounts in the same service, for example, multiple Gmail accounts or multiple Slack teams.</td>
+</tr>
+<tr>
 <td>sort</td>
 <td>By relevance</td>
 <td>Override the default sort order.  Valid sort orders include: <code class="prettyprint">date</code>, <code class="prettyprint">author</code>, <code class="prettyprint">name</code>, <code class="prettyprint">title</code>.<code class="prettyprint">subject</code>.  Ascending <code class="prettyprint">:asc</code> or Descending <code class="prettyprint">:desc</code> must be specified, for example: <code class="prettyprint">sort=date:asc</code>.</td>
