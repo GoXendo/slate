@@ -218,7 +218,7 @@ api.kittens.get()
 ```
 
 ```shell
-curl -H "Authorization: Bearer 17126fbae733871b7c0eeda04b2cfb3b57f4cb60" -X GET "https://xen.do/api/v1/facets/?q=winston%20churchill"
+curl -X GET "https://xen.do/api/v1/facets/?q=winston%20churchill" -H "Authorization: Bearer 17126fbae733871b7c0eeda04b2cfb3b57f4cb60" 
 ```
 
 > The above command returns JSON structured like this:
