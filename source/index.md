@@ -218,8 +218,7 @@ api.kittens.get()
 ```
 
 ```shell
-curl -X GET "https://xen.do/api/v1/facets/?q=winston%20churchill"
-  -H "Authorization: Bearer 17126fbae733871b7c0eeda04b2cfb3b57f4cb60" 
+curl -H "Authorization: Bearer 17126fbae733871b7c0eeda04b2cfb3b57f4cb60" -X GET "https://xen.do/api/v1/facets/?q=winston%20churchill"
 ```
 
 > The above command returns JSON structured like this:
@@ -262,6 +261,8 @@ facet_dates | None | If this parameter is specified, matching counds for the fol
 
 ## Autosuggest
 
+> List services and content types that contain the partial term 'winst':
+
 ```ruby
 require 'kittn'
 
@@ -277,7 +278,7 @@ api.kittens.get()
 ```
 
 ```shell
-curl -H "Authorization: Bearer 17126fbae733871b7c0eeda04b2cfb3b57f4cb60" -X GET https://xen.do/api/v1/autosuggest/?q=winst
+curl -X GET "https://xen.do/api/v1/autosuggest/?q=winst" -H "Authorization: Bearer 17126fbae736771b7c0eeda04b2cfb3b57f4cb60" 
 ```
 
 > The above command returns JSON structured like this:
@@ -301,7 +302,7 @@ curl -H "Authorization: Bearer 17126fbae733871b7c0eeda04b2cfb3b57f4cb60" -X GET 
 }
 ```
 
-This endpoint provides lists of sources and content types that contain the partial search term.  The list of facets can be applied to help users navigate and refine their search query, providing 'autosuggest' or 'autocomplete' capabilities.
+This endpoint provides lists of sources and content types that contain the partial search term.  The list of facets can be used to populate a dropdown or picklist to help users refine their search, as they type.
 
 ### HTTP Request
 
@@ -314,6 +315,109 @@ Parameter | Default | Description
 q | None | Search query.
 sources | None | Comma-separated list of sources.  Supported types include `salesforce`, `gmail`, `box`, `dropbox`.
 content_types | None | Comma-separated list of content types.  Supported types include `document`, `spreadsheet`, `contact`.
+
+
+
+## Autocomplete
+
+> Get suggestions for the term 'winston':
+
+```ruby
+require 'kittn'
+
+api = Kittn::APIClient.authorize!('meowmeowmeow')
+api.kittens.get
+```
+
+```python
+import kittn
+
+api = kittn.authorize('meowmeowmeow')
+api.kittens.get()
+```
+
+```shell
+curl -X GET "https://xen.do/api/v1/typeahead-suggest/?q=winston" -H "Authorization: Bearer 17126fbae755871b7c0eeda04b2cfb3b57f4cb60" 
+```
+
+> The above command returns JSON structured like this:
+
+```json
+{
+  "response":
+  {
+    "start":0,
+    "maxScore":11.757046,
+    "numFound":2,
+    "docs":[
+      {"title":"Winston Churchill, Security, and DevOps"},
+      {"name":"Johnny Winston"}
+    ]
+  }
+}
+```
+
+This endpoint provides a list of document titles and/or names that contain text matching the query parameter.  This endpoint is designed to be high performance in order to provide users with timely suggestions about likely matches for the term they're searching, as they type.
+
+### HTTP Request
+
+`GET https://xen.do/api/v1/typeahead-suggest/`
+
+### Query Parameters
+
+Parameter | Default | Description
+--------- | ------- | -----------
+q | None | Search query or partical search query.
+
+
+
+
+## Spelling
+
+> Get suggested spelling corrections for 'winstin churchill':
+
+```ruby
+require 'kittn'
+
+api = Kittn::APIClient.authorize!('meowmeowmeow')
+api.kittens.get
+```
+
+```python
+import kittn
+
+api = kittn.authorize('meowmeowmeow')
+api.kittens.get()
+```
+
+```shell
+curl -X GET "https://xen.do/api/v1/spell/?q=winstin churchill" -H "Authorization: Bearer 17126fbae733871b7c0eeda04b2cfb3b57f4cb60" 
+```
+
+> The above command returns JSON structured like this:
+
+```json
+[
+  {
+    "hits":1,
+    "collationQuery":"winston churchill",
+    "misspellingsAndCorrections":["winstin","winston","churchill","churchill"]
+  }
+]
+```
+
+This endpoint provides spelling correction suggestions based on the authenticated user's document corpus.  This capability can be used to provide 'Did you mean' capabilities to help users find what they intended.
+
+### HTTP Request
+
+`GET https://xen.do/api/v1/spell/`
+
+### Query Parameters
+
+Parameter | Default | Description
+--------- | ------- | -----------
+q | None | Search query or partical search query.
+
 
 
 
