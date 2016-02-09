@@ -1,10 +1,10 @@
 ---
-title: API Reference
+title: Xendo API Reference
 
 language_tabs:
   - shell
-  - ruby
   - python
+  - ruby
 
 toc_footers:
   - <a href='http://info.xen.do/developers/api'>Sign Up for a Developer Key</a>
@@ -16,7 +16,14 @@ includes:
 search: true
 ---
 
-# Introduction
+# Xendo API Introduction
+
+> API Endpoint
+
+```shell
+https://xen.do/api/v1/ 
+```
+
 
 Xendo's a hosted Enterprise Search service that provides unified search across 30+ cloud apps like Google Apps, Salesforce, Box, Dropbox, Asana, Microsoft Exchange and more (see the full list here https://xen.do/integrations).
 
@@ -69,8 +76,9 @@ redirect_uri | None | <Your Redirect URI>
 
 ## Step 3 - Refreshing an Access Token
 
+> The Authorization Bearer header must be passed with every API request.  For example:
+
 ```shell
-# The Authorization Bearer header must be passed with every API request.  For example:
 curl -X GET "https://xen.do/api/v1/search/" 
     -H "Authorization: Bearer 17126fbae658371b7c0eeda04b2cfb3b57f4cb60" 
 ```
@@ -133,6 +141,7 @@ curl -X GET "https://xen.do/api/v1/search/?q=winston%20churchill"
                 "score": 12.350116, 
                 "source_content_type": "share", 
                 "storm_user_id": "8", 
+                "service_id": "12944", 
                 "id": "12944-s6022478279817060352"
             }, 
             {
@@ -148,6 +157,7 @@ curl -X GET "https://xen.do/api/v1/search/?q=winston%20churchill"
                 "message": "If you're going through hell, keep going. - Winston Churchill", 
                 "source_content_type": "tweet", 
                 "storm_user_id": "8", 
+                "service_id": "350", 
                 "id": "350-629154126358667264"
             }, 
             {
@@ -163,6 +173,7 @@ curl -X GET "https://xen.do/api/v1/search/?q=winston%20churchill"
                 "message": "Success is not final, failure is not fatal: it is the courage to continue that counts. - Winston Churchill", 
                 "source_content_type": "tweet", 
                 "storm_user_id": "8", 
+                "service_id": "350", 
                 "id": "350-628280455117316096"
             }, 
         ]
@@ -184,6 +195,8 @@ q | None | Search query.
 sources | None | Comma-separated list of sources.  Supported types include `salesforce`, `gmail`, `box`, `dropbox`.
 content_types | None | Comma-separated list of content types.  Supported types include `document`, `spreadsheet`, `contact`.
 dates | None | Restrict the results to items within the specified date range expressed as `dates=<date_from>,<date_to>`.  Dates should be formatted `YYYY-MM-DDThh:mm:ssZ`.  Searching between a date range would look this `/api/v1/search/?q=*&dates=2015-10-20T23:00:00Z,2015-11-11T23:00:00Z`. Alternatively, the 'dates' parameter can accept a descriptive value: `NOW`, `MINUTES`, `HOURS`, `DAYS`, `MONTHS`, `YEARS` which can be used `/api/v1/search/?q=*&dates=n<date unit>`.  As an example, searching for content updates within the past 3 hours would be `/api/v1/search/?q=*&dates=3HOURS`. 
+tags | None | Comma-separated list of tags which will be used to filter search results.
+account | None | Restrict a search to a specific account.  Typically used when a user has multiple accounts in the same service, for example, multiple Gmail accounts or multiple Slack teams.
 sort | By relevance | Override the default sort order.  Valid sort orders include: `date`, `author`, `name`, `title`.`subject`.  Ascending `:asc` or Descending `:desc` must be specified, for example: `sort=date:asc`.
 page_size | 20 | Number of results to return per page.
 p | 0 | Page of results.
@@ -208,8 +221,7 @@ api.kittens.get()
 ```
 
 ```shell
-curl -X GET "https://xen.do/api/v1/facets/?q=winston%20churchill"
-  -H "Authorization: Bearer 17126fbae733871b7c0eeda04b2cfb3b57f4cb60" 
+curl -X GET "https://xen.do/api/v1/facets/?q=winston%20churchill" -H "Authorization: Bearer 17126fbae733871b7c0eeda04b2cfb3b57f4cb60" 
 ```
 
 > The above command returns JSON structured like this:
@@ -252,6 +264,8 @@ facet_dates | None | If this parameter is specified, matching counds for the fol
 
 ## Autosuggest
 
+> List services and content types that contain the partial term 'winst':
+
 ```ruby
 require 'kittn'
 
@@ -267,7 +281,7 @@ api.kittens.get()
 ```
 
 ```shell
-curl -H "Authorization: Bearer 17126fbae733871b7c0eeda04b2cfb3b57f4cb60" -X GET https://xen.do/api/v1/autosuggest/?q=winst
+curl -X GET "https://xen.do/api/v1/autosuggest/?q=winst" -H "Authorization: Bearer 17126fbae736771b7c0eeda04b2cfb3b57f4cb60" 
 ```
 
 > The above command returns JSON structured like this:
@@ -291,7 +305,7 @@ curl -H "Authorization: Bearer 17126fbae733871b7c0eeda04b2cfb3b57f4cb60" -X GET 
 }
 ```
 
-This endpoint enables search across all connected service accounts.
+This endpoint provides lists of sources and content types that contain the partial search term.  The list of facets can be used to populate a dropdown or picklist to help users refine their search, as they type.
 
 ### HTTP Request
 
@@ -305,6 +319,356 @@ q | None | Search query.
 sources | None | Comma-separated list of sources.  Supported types include `salesforce`, `gmail`, `box`, `dropbox`.
 content_types | None | Comma-separated list of content types.  Supported types include `document`, `spreadsheet`, `contact`.
 
+
+
+## Autocomplete
+
+> Get suggestions for the term 'winston':
+
+```ruby
+require 'kittn'
+
+api = Kittn::APIClient.authorize!('meowmeowmeow')
+api.kittens.get
+```
+
+```python
+import kittn
+
+api = kittn.authorize('meowmeowmeow')
+api.kittens.get()
+```
+
+```shell
+curl -X GET "https://xen.do/api/v1/typeahead-suggest/?q=winston" -H "Authorization: Bearer 17126fbae755871b7c0eeda04b2cfb3b57f4cb60" 
+```
+
+> The above command returns JSON structured like this:
+
+```json
+{
+  "response":
+  {
+    "start":0,
+    "maxScore":11.757046,
+    "numFound":2,
+    "docs":[
+      {"title":"Winston Churchill, Security, and DevOps"},
+      {"name":"Johnny Winston"}
+    ]
+  }
+}
+```
+
+This endpoint provides a list of document titles and/or names that contain text matching the query parameter.  This endpoint is designed to be high performance in order to provide users with timely suggestions about likely matches for the term they're searching, as they type.
+
+### HTTP Request
+
+`GET https://xen.do/api/v1/typeahead-suggest/`
+
+### Query Parameters
+
+Parameter | Default | Description
+--------- | ------- | -----------
+q | None | Search query or partical search query.
+
+
+
+
+## Spelling
+
+> Get suggested spelling corrections for 'winstin churchill':
+
+```ruby
+require 'kittn'
+
+api = Kittn::APIClient.authorize!('meowmeowmeow')
+api.kittens.get
+```
+
+```python
+import kittn
+
+api = kittn.authorize('meowmeowmeow')
+api.kittens.get()
+```
+
+```shell
+curl -X GET "https://xen.do/api/v1/spell/?q=winstin churchill" -H "Authorization: Bearer 17126fbae733871b7c0eeda04b2cfb3b57f4cb60" 
+```
+
+> The above command returns JSON structured like this:
+
+```json
+[
+  {
+    "hits":1,
+    "collationQuery":"winston churchill",
+    "misspellingsAndCorrections":["winstin","winston","churchill","churchill"]
+  }
+]
+```
+
+This endpoint provides spelling correction suggestions based on the authenticated user's document corpus.  This capability can be used to provide 'Did you mean' capabilities to help users find what they intended.
+
+### HTTP Request
+
+`GET https://xen.do/api/v1/spell/`
+
+### Query Parameters
+
+Parameter | Default | Description
+--------- | ------- | -----------
+q | None | Search query or partical search query.
+
+
+
+
+# Views
+
+## List User Views
+
+> Return a list of the authenticated user's views:
+
+```shell
+curl -X GET "https://xen.do/api/v1/user-view/"
+    -H "Authorization: Bearer 17126fbae733871b7c0eeda04b2cfb3b57f4cb60" 
+```
+
+> The above command returns JSON structured like this:
+
+```json
+{
+  "meta": {
+    "limit": 75,
+    "next": null,
+    "offset": 0,
+    "previous": null,
+    "total_count": 2
+  },
+  "objects": [
+    {
+      "created": "Tue, 26 May 2015 22:58:20 -0500",
+      "description": "Most recent updates from across your accounts",
+      "facets": "[]",
+      "id": 448,
+      "modified": "Tue, 22 Dec 2015 23:58:36 -0600",
+      "ordering": 0,
+      "query": "recent:content",
+      "resource_uri": "/api/v1/user-view/448/",
+      "short_label": "Recent updates",
+      "sort_fields": "",
+      "user": "/api/v1/user/22/"
+    },
+    {
+      "created": "Wed, 25 Nov 2015 15:33:48 -0600",
+      "description": "Results for 'Project X'",
+      "facets": "[]",
+      "id": 516,
+      "modified": "Wed, 23 Dec 2015 13:33:02 -0600",
+      "ordering": 1,
+      "query": "project x",
+      "resource_uri": "/api/v1/user-view/516/",
+      "short_label": "Project X tracking",
+      "sort_fields": "",
+      "user": "/api/v1/user/22/"
+    },
+  ]
+}
+```
+
+This endpoint enables an authenticated user to set and retrieve their saved views.  'Views' provide an intuitive way for users to encapsulate complex search queries with a memorable and meaningful label.  Using 'views', a user may search their content with one click rather than having to compose a search query.  'Views' are the foundation for alerts which may be configured to notify users about new content that matches a 'view'.
+
+### HTTP Request
+
+`GET https://xen.do/api/v1/user-view/`
+
+
+
+## Get a specific View
+
+> Return a specific view:
+
+```shell
+curl -X GET "https://xen.do/api/v1/user-view/448/"
+    -H "Authorization: Bearer 17126fbae733871b7c0eeda04b2cfb3b57f4cb60" 
+```
+
+> The above command returns JSON structured like this:
+
+```json
+{
+  "id": 448,
+  "created": "Tue, 26 May 2015 22:58:20 -0500",
+  "description": "Most recent updates from across your accounts",
+  "facets": "[]",
+  "modified": "Tue, 22 Dec 2015 23:58:36 -0600",
+  "ordering": 0,
+  "query": "recent:content",
+  "resource_uri": "/api/v1/user-view/448/",
+  "short_label": "hello",
+  "sort_fields": "",
+  "user": "/api/v1/user/22/"
+}
+```
+
+This endpoint enables an authenticated user to create, read, update and delete a 'view'.
+
+### HTTP Request
+
+`GET https://xen.do/api/v1/user-view/<ID>/`
+
+### Query Parameters
+
+Parameter | Default | Description
+--------- | ------- | -----------
+ID | None | ID of the view.
+
+
+# Services
+
+## List User Services
+
+> Retrieve a list of services for an authenticated user.  Service descriptions include display names and current indexing state:
+
+```shell
+curl -X GET "https://xen.do/api/v1/user-service/"
+    -H "Authorization: Bearer 17126fbae733871b7c0eeda04b2cfb3b57f4cb60" 
+```
+
+> The above command returns JSON structured like this:
+
+```json
+{
+  "meta": {
+    "limit": 75,
+    "next": null,
+    "offset": 0,
+    "previous": null,
+    "total_count": 9
+  },
+  "objects": [
+    {
+      "created": "Mon, 18 May 2015 15:01:34 -0500",
+      "display_name": "julian",
+      "exclude": null,
+      "icon_url": "/static/images/services/icons/slack.png",
+      "id": 259,
+      "initial_indexing_progress": null,
+      "items_total": 0,
+      "last_indexed": null,
+      "logo_url": "/static/images/services/slack.png",
+      "next_indexing": "Mon, 18 May 2015 15:01:34 -0500",
+      "notify_on_completion": false,
+      "ordering": 7,
+      "pretty_name": "Slack",
+      "private_service": false,
+      "resource_uri": "/api/v1/user-service/259/",
+      "service_name": "slack",
+      "source_connection_status": null,
+      "status": "indexing",
+      "token_expiration_date": null
+    },
+    {
+      "created": "Fri, 1 May 2015 18:29:38 -0500",
+      "display_name": "Julian Gay",
+      "exclude": null,
+      "icon_url": "/static/images/services/box.png",
+      "id": 249,
+      "initial_indexing_progress": null,
+      "items_total": 40,
+      "last_indexed": "Tue, 13 Oct 2015 20:47:12 -0500",
+      "logo_url": "/static/images/services/box.png",
+      "next_indexing": "Tue, 13 Oct 2015 21:07:12 -0500",
+      "notify_on_completion": false,
+      "ordering": 3,
+      "pretty_name": "Box",
+      "private_service": false,
+      "resource_uri": "/api/v1/user-service/249/",
+      "service_name": "box",
+      "source_connection_status": "('Connection aborted.', 'nodename not provided, or not known')",
+      "status": "indexing",
+      "token_expiration_date": null
+    },
+    {
+      "created": "Sat, 10 Oct 2015 23:22:04 -0500",
+      "display_name": "@juliangay",
+      "exclude": null,
+      "icon_url": "/static/images/services/icons/twitter.png",
+      "id": 274,
+      "initial_indexing_progress": null,
+      "items_total": 21201,
+      "last_indexed": "Fri, 23 Oct 2015 05:02:00 -0500",
+      "logo_url": "/static/images/services/twitter.png",
+      "next_indexing": "Fri, 23 Oct 2015 05:22:00 -0500",
+      "notify_on_completion": false,
+      "ordering": 1,
+      "pretty_name": "Twitter",
+      "private_service": false,
+      "resource_uri": "/api/v1/user-service/274/",
+      "service_name": "twitter",
+      "source_connection_status": null,
+      "status": "indexing",
+      "token_expiration_date": null
+    },
+   ]
+}
+```
+
+This endpoint enables an authenticated user to list, create, update and delete their connected services.
+
+### HTTP Request
+
+`GET https://xen.do/api/v1/user-service/`
+
+
+
+## Get a specific Service description
+
+> Retrieve a specific service description and status for an authenticated user.  Service descriptions include display names and current indexing state:
+
+```shell
+curl -X GET "https://xen.do/api/v1/user-service/274/"
+    -H "Authorization: Bearer 17126fbae733871b7c0eeda04b2cfb3b57f4cb60" 
+```
+
+> The above command returns JSON structured like this:
+
+```json
+{
+  "id": 274, 
+  "service_name": "twitter", 
+  "pretty_name": "Twitter", 
+  "display_name": "@juliangay", 
+  "icon_url": "/static/images/services/icons/twitter.png", 
+  "created": "Sat, 10 Oct 2015 23:22:04 -0500", 
+  "last_indexed": "Fri, 23 Oct 2015 05:02:00 -0500", 
+  "items_total": 21201, 
+  "exclude": null, 
+  "initial_indexing_progress": null, 
+  "logo_url": "/static/images/services/twitter.png", 
+  "notify_on_completion": false, 
+  "ordering": 1, 
+  "private_service": false, 
+  "resource_uri": "/api/v1/user-service/274/", 
+  "source_connection_status": null, 
+  "status": "indexing", 
+  "next_indexing": "Fri, 23 Oct 2015 05:22:00 -0500", 
+  "token_expiration_date": null
+}
+```
+
+This endpoint enables an authenticated user to read, create, update and delete a connected service.
+
+### HTTP Request
+
+`GET https://xen.do/api/v1/user-service/<ID>/`
+
+### Query Parameters
+
+Parameter | Default | Description
+--------- | ------- | -----------
+ID | None | The unique service ID of the user's connected account.
 
 
 # Provisioning
@@ -405,115 +769,3 @@ sources | None | Comma-separated list of source services eg. salesforce,box,gmai
 <aside class="success">
 Remember — a happy kitten is an authenticated kitten!
 </aside>
-
-
-
-
-# Kittens
-
-## Get All Kittens
-
-```ruby
-require 'kittn'
-
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-api.kittens.get
-```
-
-```python
-import kittn
-
-api = kittn.authorize('meowmeowmeow')
-api.kittens.get()
-```
-
-```shell
-curl "http://example.com/api/kittens"
-  -H "Authorization: meowmeowmeow"
-```
-
-> The above command returns JSON structured like this:
-
-```json
-[
-  {
-    "id": 1,
-    "name": "Fluffums",
-    "breed": "calico",
-    "fluffiness": 6,
-    "cuteness": 7
-  },
-  {
-    "id": 2,
-    "name": "Max",
-    "breed": "unknown",
-    "fluffiness": 5,
-    "cuteness": 10
-  }
-]
-```
-
-This endpoint retrieves all kittens.
-
-### HTTP Request
-
-`GET http://example.com/api/kittens`
-
-### Query Parameters
-
-Parameter | Default | Description
---------- | ------- | -----------
-include_cats | false | If set to true, the result will also include cats.
-available | true | If set to false, the result will include kittens that have already been adopted.
-
-<aside class="success">
-Remember — a happy kitten is an authenticated kitten!
-</aside>
-
-## Get a Specific Kitten
-
-```ruby
-require 'kittn'
-
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-api.kittens.get(2)
-```
-
-```python
-import kittn
-
-api = kittn.authorize('meowmeowmeow')
-api.kittens.get(2)
-```
-
-```shell
-curl "http://example.com/api/kittens/2"
-  -H "Authorization: meowmeowmeow"
-```
-
-> The above command returns JSON structured like this:
-
-```json
-{
-  "id": 2,
-  "name": "Max",
-  "breed": "unknown",
-  "fluffiness": 5,
-  "cuteness": 10
-}
-```
-
-This endpoint retrieves a specific kitten.
-
-<aside class="warning">If you're not using an administrator API key, note that some kittens will return 403 Forbidden if they are hidden for admins only.</aside>
-
-### HTTP Request
-
-`GET http://example.com/kittens/<ID>`
-
-### URL Parameters
-
-Parameter | Description
---------- | -----------
-ID | The ID of the kitten to retrieve
-
